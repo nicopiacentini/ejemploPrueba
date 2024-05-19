@@ -44,3 +44,26 @@ cosmo ninio = ninio{edad = div (edad ninio) 2}
 
 muffinMagico :: Chico -> Chico
 muffinMagico ninio = ninio{deseos = []}
+
+
+--B
+tieneHabilidad :: String -> Chico -> Bool
+tieneHabilidad hability ninio = elem hability (habilidades ninio)
+
+esSuperMaduro :: Chico -> Bool
+esSuperMaduro ninio = edad ninio > 18 && elem "Sabe Manejar" (habilidades ninio)
+
+--2
+data Chica = UnaChica {
+    nombreChica :: String,
+    condicion :: String
+}
+
+
+
+quienConquistaA :: Chica -> [Chico] -> Chico
+quienConquistaA ninia ninios 
+    | null niniosQueCumplen = last ninios
+    | otherwise = head niniosQueCumplen
+    where niniosQueCumplen = filter (tieneHabilidad (condicion ninia)) ninios
+
