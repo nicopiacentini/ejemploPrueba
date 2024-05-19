@@ -63,3 +63,17 @@ mixturadora (UnHelado nombre1 temperatura1 proporcion1) (UnHelado nombre2 temper
     temperatura = min temperatura1 temperatura2,
     proporcionAgua = (proporcion1 + proporcion2) / 2
 } 
+
+--punto 3 
+--inciso a
+
+
+cintaTransportadora :: (Helado -> Helado) -> (Helado -> Helado) -> (Helado -> Helado) -> (Helado -> Helado)
+cintaTransportadora maquina1 maquina2 maquina3 = maquina3 . maquina2 . maquina1
+
+-- inciso b
+cintaUnificadora :: ((Helado -> Helado) -> (Helado -> Helado) -> (Helado -> Helado)) -> (Helado -> Helado) -> (Helado -> Helado) -> (Helado -> Helado)
+cintaUnificadora megamaquina maquina1 maquina2 = megamaquina maquina1 maquina2
+
+
+
