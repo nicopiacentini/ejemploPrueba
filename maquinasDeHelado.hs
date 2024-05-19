@@ -47,8 +47,8 @@ litrosAgua = fst
 temperaturaAgua :: BidonAgua -> Float
 temperaturaAgua = snd
 
-batidora :: CajonFruta -> BidonAgua -> Helado
-batidora frutas agua = UnHelado{
+batidora :: BidonAgua -> CajonFruta -> Helado
+batidora agua frutas = UnHelado{
     nombre = frutaCajon frutas,
     temperatura = temperaturaAgua agua,
     proporcionAgua = litrosAgua agua / kilosCajon frutas
@@ -76,4 +76,12 @@ cintaUnificadora :: ((Helado -> Helado) -> (Helado -> Helado) -> (Helado -> Hela
 cintaUnificadora megamaquina maquina1 maquina2 = megamaquina maquina1 maquina2
 
 
+
+--Ejercicio 4
+
+--Estos son TESTS
+
+--ejercicio5
+produccionSerie :: BidonAgua -> [CajonFruta] -> [Helado]
+produccionSerie agua = filter (not . salioMal) . map (batidora agua)
 
