@@ -27,3 +27,39 @@ proporcionIncorrecta (UnHelado nombre _ proporcion)
 
 salioMal :: Helado -> Bool
 salioMal helado = noCongelado helado || proporcionIncorrecta helado
+
+
+--punto2
+
+
+heladera :: Float -> Helado -> Helado
+heladera temperaturaReducida helado = helado {temperatura = temperatura helado - temperaturaReducida}
+
+type CajonFruta = (String, Float)
+frutaCajon :: CajonFruta -> String
+frutaCajon = fst
+kilosCajon :: CajonFruta -> Float
+kilosCajon = snd
+
+type BidonAgua = (Float, Float)
+litrosAgua :: BidonAgua -> Float
+litrosAgua = fst
+temperaturaAgua :: BidonAgua -> Float
+temperaturaAgua = snd
+
+batidora :: CajonFruta -> BidonAgua -> Helado
+batidora frutas agua = UnHelado{
+    nombre = frutaCajon frutas,
+    temperatura = temperaturaAgua agua,
+    proporcionAgua = litrosAgua agua / kilosCajon frutas
+}
+
+exprimidora :: CajonFruta -> CajonFruta
+exprimidora cajon = (frutaCajon cajon, kilosCajon cajon / 2)
+
+mixturadora :: Helado -> Helado -> Helado
+mixturadora (UnHelado nombre1 temperatura1 proporcion1) (UnHelado nombre2 temperatura2 proporcion2) = UnHelado{
+    nombre = nombre1 ++ '-' : nombre2,
+    temperatura = min temperatura1 temperatura2,
+    proporcionAgua = (proporcion1 + proporcion2) / 2
+} 
