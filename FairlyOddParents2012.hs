@@ -67,3 +67,18 @@ quienConquistaA ninia ninios
     | otherwise = head niniosQueCumplen
     where niniosQueCumplen = filter (tieneHabilidad (condicion ninia)) ninios
 
+
+--C seccion da rules
+habilidadesProhibidas :: [String]
+habilidadesProhibidas = ["enamorar", "matar", "dominar el mundo"]
+infractoresDeDaRules :: [Chico] -> [String]
+infractoresDeDaRules chicos = map nombre . filter pideHabilidadesProhibidas $ chicos
+
+pideHabilidadesProhibidas :: Chico -> Bool
+pideHabilidadesProhibidas chico = not(null(intersectar (deseos chico) habilidadesProhibidas))
+
+intersectar :: [String] -> [String] -> [String]
+intersectar [] _ = []
+intersectar (deseo : deseos) habilidades0
+    | elem deseo habilidades0 = deseo : (intersectar deseos habilidades0)
+    | otherwise = intersectar deseos habilidades0
