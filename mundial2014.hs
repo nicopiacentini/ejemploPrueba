@@ -64,3 +64,21 @@ esDificil :: Jugador -> Bool
 esDificil jugador = (esFigura jugador) && (not . esFarandulero $ jugador) && (esJoven jugador)
 
 --hola
+
+--4
+modificarJugadores :: Equipo -> [Jugador] -> Equipo
+modificarJugadores (a, b , _) jugadores= (a, b , jugadores)
+reemplazarCansansio :: Jugador -> Float -> Jugador
+reemplazarCansansio jugador desgaste = jugador{cansancio = desgaste}
+modificarCansancio :: Jugador -> Float -> Jugador
+modificarCansancio jugador masCansancio = jugador{cansancio = masCansancio + cansancio jugador}
+
+jugar :: Jugador -> Jugador
+jugar jugador 
+    | esDificil jugador = reemplazarCansansio jugador 50
+    | esJoven jugador   = modificarCansancio jugador (0.1 * (cansancio jugador))
+    | esFigura jugador  = modificarCansancio jugador 20
+    | otherwise         = modificarCansancio jugador (2 * (cansancio jugador))
+
+jugarPartido :: Equipo -> Equipo
+jugarPartido equipo = modificarJugadores equipo . map jugar . jugadoresDelEquipo $ equipo
