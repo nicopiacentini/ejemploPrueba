@@ -46,3 +46,12 @@ esFigura jugador = (esHabilidoso jugador) && (promedioPositivo jugador)
 
 figurasDeUnEquipo :: Equipo -> [Jugador]
 figurasDeUnEquipo equipo = filter esFigura . jugadoresDelEquipo $ equipo
+
+--2
+jugadoresFaranduleros :: [String]
+jugadoresFaranduleros = ["Maxi Lopez", "Icardi", "Aguero", "Caniggia", "Demichelis"]
+
+
+
+tieneFarandulero :: Equipo -> Bool
+tieneFarandulero  = any (\jugador -> elem jugador jugadoresFaranduleros) . map nombre . jugadoresDelEquipo
