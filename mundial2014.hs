@@ -51,7 +51,16 @@ figurasDeUnEquipo equipo = filter esFigura . jugadoresDelEquipo $ equipo
 jugadoresFaranduleros :: [String]
 jugadoresFaranduleros = ["Maxi Lopez", "Icardi", "Aguero", "Caniggia", "Demichelis"]
 
-
+esFarandulero :: Jugador -> Bool
+esFarandulero jugador =  elem (nombre jugador) jugadoresFaranduleros
 
 tieneFarandulero :: Equipo -> Bool
-tieneFarandulero  = any (\jugador -> elem jugador jugadoresFaranduleros) . map nombre . jugadoresDelEquipo
+tieneFarandulero  = any esFarandulero . jugadoresDelEquipo
+
+--3
+esJoven :: Jugador -> Bool
+esJoven = (> 27) . edad
+esDificil :: Jugador -> Bool
+esDificil jugador = (esFigura jugador) && (not . esFarandulero $ jugador) && (esJoven jugador)
+
+--hola
