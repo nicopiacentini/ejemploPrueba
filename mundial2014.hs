@@ -94,3 +94,11 @@ ganador equipito equipo2
     | (promedioTitulares equipito) > (promedioTitulares equipo2) = jugarPartido equipito
     | otherwise = jugarPartido equipo2
 
+--6
+campeon :: [Equipo] -> Equipo
+campeon equipos = foldl (ganador) (head equipos) equipos
+
+campeonOtraForma :: [Equipo] -> Equipo
+campeonOtraForma (team1 : team2 : teams) = campeonOtraForma ((ganador team1 team2) : teams)
+campeonOtraForma (team : []) = team
+campeonOtraForma [] = losDeSiempre
