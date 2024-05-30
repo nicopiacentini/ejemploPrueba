@@ -102,3 +102,6 @@ campeonOtraForma :: [Equipo] -> Equipo
 campeonOtraForma (team1 : team2 : teams) = campeonOtraForma ((ganador team1 team2) : teams)
 campeonOtraForma (team : []) = team
 campeonOtraForma [] = losDeSiempre
+--7
+elGrosso :: [Equipo] -> Jugador
+elGrosso = head . dropWhile (not . esFigura) . jugadoresDelEquipo . campeon
