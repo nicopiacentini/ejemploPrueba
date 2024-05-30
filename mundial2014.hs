@@ -82,3 +82,15 @@ jugar jugador
 
 jugarPartido :: Equipo -> Equipo
 jugarPartido equipo = modificarJugadores equipo . map jugar . jugadoresDelEquipo $ equipo
+
+--5
+quickSort :: (Num b ,Ord b) => (a -> b) -> [a] -> [a]
+quickSort _ lista = lista
+
+promedioTitulares :: Equipo -> Float
+promedioTitulares equipo = sum . map promedioDeGol . take 11 . quickSort cansancio . jugadoresDelEquipo $ equipo
+ganador :: Equipo -> Equipo -> Equipo
+ganador equipito equipo2
+    | (promedioTitulares equipito) > (promedioTitulares equipo2) = jugarPartido equipito
+    | otherwise = jugarPartido equipo2
+
