@@ -61,5 +61,8 @@ mejora (actividad : actividades) animal
     | diferenciaPesoAceptable animal . actividad $ animal = mejora actividades animal
     | otherwise = False
 
+--5
+primeros3falopa :: [Animal] -> [Animal]
+primeros3falopa = take 3 . filter tieneNombreFalopa
 
-
+--en mi caso no porque mi funcion primeros3Falopa primero filtra y luego toma los primeros 3, sin embargo, nunca termina de filtrar
