@@ -49,3 +49,17 @@ chequeoPeso pesoMinimo animal
 proceso :: Animal -> [Actividad] -> Animal
 proceso animal actividades = foldr ($) animal actividades
 
+--4
+diferenciaPeso :: Animal -> Animal -> Float
+diferenciaPeso antes despues = (peso despues) - (peso antes)
+diferenciaPesoAceptable :: Animal -> Animal -> Bool
+diferenciaPesoAceptable animalAntes animalDespues = (diferenciaPeso animalAntes animalDespues) >= 0 && ((diferenciaPeso animalAntes animalDespues)) < 3
+
+mejora :: [Actividad] -> Animal -> Bool
+mejora [] _ = True
+mejora (actividad : actividades) animal
+    | diferenciaPesoAceptable animal . actividad $ animal = mejora actividades animal
+    | otherwise = False
+
+
+
