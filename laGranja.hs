@@ -43,3 +43,9 @@ chequeoPeso :: Float -> Actividad
 chequeoPeso pesoMinimo animal
     | pesoMinimo < peso animal = animal
     | otherwise = enfermar animal
+
+--3
+
+proceso :: Animal -> [Actividad] -> Animal
+proceso animal actividades = foldr ($) animal actividades
+
