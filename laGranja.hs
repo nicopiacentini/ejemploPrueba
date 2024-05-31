@@ -4,7 +4,7 @@ data Animal = UnAnimal{
     peso :: Float,
     tipo :: String,
     estaEnfermo :: Bool
-}
+}deriving Show
 type DiasYCosto = (Int , Float)
 type VisitaMedica = Animal -> DiasYCosto
 dias :: DiasYCosto  -> Int
@@ -18,4 +18,28 @@ laPasoMal :: VisitaMedica -> Animal -> Bool
 laPasoMal visita = (> 30) . dias . visita
 
 --2
+vacaJuan :: Animal
+vacaJuan = UnAnimal "VacaJuan" 10 690 "pacogonzales" False
+modificarPeso :: Float -> Animal -> Animal
+modificarPeso nuevoPeso animal = animal{peso = nuevoPeso}
 type Actividad = Animal -> Animal
+engorde :: Float -> Actividad
+engorde kilos animal = modificarPeso ( (min 5 (kilos / 2)) + peso animal ) animal
+--b
+revisacion :: Actividad
+revisacion animal
+    | estaEnfermo animal = engorde 2 animal
+    | otherwise = animal
+
+modificarEdad :: Int -> Animal -> Animal
+modificarEdad edadNueva animal = animal{edad = edadNueva}
+--c
+festejoPumple :: Actividad
+festejoPumple animal = modificarPeso ( -1 + peso animal) . modificarEdad ( 1 + edad animal) $ animal
+--d
+enfermar :: Animal -> Animal
+enfermar animal = animal{estaEnfermo = True}
+chequeoPeso :: Float -> Actividad
+chequeoPeso pesoMinimo animal
+    | pesoMinimo < peso animal = animal
+    | otherwise = enfermar animal
