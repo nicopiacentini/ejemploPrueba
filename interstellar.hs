@@ -45,5 +45,23 @@ viaje :: Astronauta -> Planeta -> Nave -> Astronauta
 viaje astronauta planetaNuevo nave = pasarTiempo (nave (planetaActual astronauta) planetaNuevo) astronauta
 
 --4
+pasarTiempo' :: Astronauta -> Int -> Astronauta
+pasarTiempo' astronauta anios = modificarEdad (edadAstronauta astronauta + (comoPasaElTiempo(planetaActual astronauta))anios) astronauta
 
+tiempoViaje :: Astronauta -> Astronauta -> Nave -> Int
+tiempoViaje astronauta1 astronauta2 nave = nave (planetaActual astronauta1) (planetaActual astronauta2)
+pasarTiempoEnOtroPlaneta :: Int -> Astronauta -> Astronauta
+pasarTiempoEnOtroPlaneta aniosTerrestres astronauta = pasarTiempo' astronauta . comoPasaElTiempo (planetaActual astronauta) $ aniosTerrestres
+rescate :: [Astronauta] -> Astronauta -> Nave -> [Astronauta]
+rescate astronautas astronautaVarado nave = map (pasarTiempo tiempoDeViaje) . ((pasarTiempoEnOtroPlaneta tiempoDeViaje astronautaVarado) :) . map (pasarTiempo tiempoDeViaje) $ astronautas
+    where tiempoDeViaje = tiempoViaje (head astronautas) astronautaVarado nave
+
+esViejo :: Astronauta -> Bool
+esViejo = (> 90) . edadAstronauta
+
+puedeSerRescatado :: [Astronauta] -> Nave -> Astronauta -> Bool
+puedeSerRescatado astronautas nave varado = all (< 90) . map edadAstronauta $ rescate astronautas varado nave
+
+puedenSerRescatados :: [Astronauta] -> Nave -> [Astronauta] -> [String]
+puedenSerRescatados astronautas nave varados = map nombreAstronauta . filter (puedeSerRescatado astronautas nave) $ varados
 
