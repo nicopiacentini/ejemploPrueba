@@ -98,3 +98,17 @@ aku anio salud' = UnPersonaje{
     elementos = [concentracion 4 , portalAlFututo anio] ++ esbirrosMalvados (100 * anio),
     anioPresente = anio
 }
+
+atacar :: Personaje -> Personaje -> Personaje -- Me dice como queda el atacado
+atacar atacante atacado = foldr ($) (atacado) (map ataque (elementos atacante))
+
+defenderse :: Personaje -> Personaje
+defenderse personaje = foldr ($) personaje (map defensa (elementos personaje))
+
+--4
+luchar :: Personaje -> Personaje -> (Personaje , Personaje)
+luchar atacante defensor
+   | (== 0) . salud . atacar atacante . defenderse $ defensor = (atacante , defensor)
+   | otherwise = luchar (atacar atacante (defenderse defensor)) atacante
+
+   
