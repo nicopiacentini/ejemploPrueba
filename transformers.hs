@@ -92,3 +92,7 @@ quienesCumplen criterio  = map nombre . filter criterio
 --b
 losDominaATodos :: Autobot -> [Autobot] -> Bool
 losDominaATodos autobot botsos = (== length botsos) . length . quienesCumplen ((=='a') . last . nombre) . filter (domina autobot) $ botsos
+
+--8
+saraza :: (Ord x) => x -> x -> x -> (x -> x -> x) -> x
+saraza x y w z = z w . maximoSegun z y $ x
