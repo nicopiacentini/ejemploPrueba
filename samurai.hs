@@ -14,8 +14,8 @@ data Personaje = UnPersonaje {
 modificarAnio :: Personaje -> Int -> Personaje
 modificarAnio personaje anio = personaje{anioPresente = anio}
 
-mandarAlAnio :: Personaje -> Int -> Personaje
-mandarAlAnio personaje = modificarAnio personaje 
+mandarAlAnio :: Int -> Personaje -> Personaje
+mandarAlAnio anio personaje = modificarAnio personaje anio
 
 modificarSalud :: Personaje -> Float -> Personaje
 modificarSalud personaje saludNueva = personaje{salud = saludNueva}
@@ -41,3 +41,60 @@ puedeMatarlo asesinado asesino = any (==0) . map (danioQueProduce asesinado) . e
 
 enemigosMortales :: Personaje -> [Personaje] -> [Personaje]
 enemigosMortales personaje enemigos = filter (puedeMatarlo personaje) enemigos
+
+--3
+noAtaca :: Personaje -> Personaje
+noAtaca personaje = personaje
+
+noDefiende :: Personaje -> Personaje
+noDefiende personaje = personaje
+
+meditarVeces :: Int -> Personaje -> Personaje
+meditarVeces 0 personaje = personaje
+meditarVeces n personaje = meditarVeces (n-1) (meditar personaje)
+concentracion :: Int -> Elemento
+concentracion nivelDeConcentracion = UnElemento{
+    tipo = "Magia",
+    ataque = noAtaca,
+    defensa = meditarVeces nivelDeConcentracion
+}
+
+esbirro :: Elemento
+esbirro = UnElemento{
+    tipo = "Malvado",
+    ataque = (`causarDanio` 1),
+    defensa = noDefiende
+}
+
+esbirrosMalvados :: Int -> [Elemento]
+esbirrosMalvados cantidad = replicate cantidad esbirro
+
+katanaMagica :: Elemento
+katanaMagica = UnElemento{
+    tipo = "Magia",
+    ataque = (`causarDanio` 1),
+    defensa = noDefiende
+}
+
+jack :: Personaje
+jack = UnPersonaje{
+    nombre = "Jack",
+    salud = 300,
+    elementos = [concentracion 3, katanaMagica],
+    anioPresente = 200
+}
+
+--d
+portalAlFututo :: Int -> Elemento
+portalAlFututo anioActual = UnElemento{
+    tipo = "Magia",
+    ataque = mandarAlAnio (2800 + anioActual),
+    defensa = noDefiende
+}
+aku :: Int -> Float -> Personaje
+aku anio salud' = UnPersonaje{
+    nombre = "aku",
+    salud = salud',
+    elementos = [concentracion 4 , portalAlFututo anio] ++ esbirrosMalvados (100 * anio),
+    anioPresente = anio
+}
