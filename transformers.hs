@@ -59,3 +59,6 @@ transformacion autobot = Vehiculo{
     caracteristicasAuto = (transformacionAauto autobot) (habilidades autobot)
 }
 
+--4
+velocidadContra :: Autobot -> Autobot -> Int
+velocidadContra autobot1 autobot2 = (velocidadAutobot autobot1) - (max 0 (fuerzaAutobot autobot2 - resistenciaAutobot autobot1))
