@@ -1,6 +1,6 @@
 import Text.Show.Functions()
 data Autobot = Robot{
-    nombreRobot :: String,
+    nombre :: String,
     habilidades :: (Int , Int , Int),
     transformacionAauto :: Transformacion
 } | Vehiculo{
@@ -55,7 +55,7 @@ resistenciaAutobot (Vehiculo _ (_,resistencia) ) = resistencia
 --3
 transformacion :: Autobot -> Autobot
 transformacion autobot = Vehiculo{
-    nombre = nombreRobot autobot,
+    nombre = nombre autobot,
     caracteristicasAuto = (transformacionAauto autobot) (habilidades autobot)
 }
 
@@ -84,3 +84,11 @@ domina autobot1 autobot2 = tuplaMayor (velocidades autobot1) . velocidades $ aut
 losDomaATodos :: Autobot -> [Autobot] -> Bool
 losDomaATodos autobot = and . map (domina autobot) 
 
+
+--7
+quienesCumplen :: (Autobot -> Bool) -> [Autobot] -> [String]
+quienesCumplen criterio  = map nombre . filter criterio
+
+--b
+losDominaATodos :: Autobot -> [Autobot] -> Bool
+losDominaATodos autobot botsos = (== length botsos) . length . quienesCumplen ((=='a') . last . nombre) . filter (domina autobot) $ botsos
