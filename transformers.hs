@@ -83,3 +83,4 @@ domina autobot1 autobot2 = tuplaMayor (velocidades autobot1) . velocidades $ aut
 --b
 losDomaATodos :: Autobot -> [Autobot] -> Bool
 losDomaATodos autobot = and . map (domina autobot) 
+
