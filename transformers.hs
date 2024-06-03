@@ -1,3 +1,4 @@
+import Text.Show.Functions()
 data Autobot = Robot{
     nombreRobot :: String,
     habilidades :: (Int , Int , Int),
@@ -5,7 +6,7 @@ data Autobot = Robot{
 } | Vehiculo{
     nombre :: String,
     caracteristicasAuto :: (Int, Int)
-}
+}deriving (Show)
 
 type Transformacion = (Int , Int , Int) -> (Int , Int) 
 
@@ -52,3 +53,9 @@ resistenciaAutobot (Robot _ (_,_,resistencia) _) = resistencia
 resistenciaAutobot (Vehiculo _ (_,resistencia) ) = resistencia
 
 --3
+transformacion :: Autobot -> Autobot
+transformacion autobot = Vehiculo{
+    nombre = nombreRobot autobot,
+    caracteristicasAuto = (transformacionAauto autobot) (habilidades autobot)
+}
+
