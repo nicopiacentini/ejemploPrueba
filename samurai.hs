@@ -111,4 +111,9 @@ luchar atacante defensor
    | (== 0) . salud . atacar atacante . defenderse $ defensor = (atacante , defensor)
    | otherwise = luchar (atacar atacante (defenderse defensor)) atacante
 
-   
+
+--5
+f :: (Eq t1, Num t2) => (t1 -> a1 -> (a2, a2)) -> (t2 -> t1) -> t1 -> [a1] -> [a2]
+f x y z
+    | y 0 == z = map (fst.x z)
+    | otherwise = map (snd.x (y 0))
