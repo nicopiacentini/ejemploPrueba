@@ -62,3 +62,24 @@ transformacion autobot = Vehiculo{
 --4
 velocidadContra :: Autobot -> Autobot -> Int
 velocidadContra autobot1 autobot2 = (velocidadAutobot autobot1) - (max 0 (fuerzaAutobot autobot2 - resistenciaAutobot autobot1))
+
+--5
+elMasRapido :: Autobot -> Autobot -> Autobot
+elMasRapido autobot1 autobot2
+    | (velocidadContra autobot1 autobot2) > (velocidadContra autobot2 autobot1) = autobot1
+    | otherwise = autobot2
+
+--6
+velocidades :: Autobot -> (Int , Int)
+velocidades autobot = (velocidadAutobot autobot , velocidadAutobot . transformacion $ autobot)
+
+tuplaMayor :: (Int , Int) -> (Int , Int) -> Bool
+tuplaMayor (v1,v2) (v3,v4) = (v1>v3) && (v1>v4) && (v2>v3) && (v2>v4)
+
+
+domina :: Autobot -> Autobot -> Bool
+domina autobot1 autobot2 = tuplaMayor (velocidades autobot1) . velocidades $ autobot2
+
+--b
+losDomaATodos :: Autobot -> [Autobot] -> Bool
+losDomaATodos autobot = and . map (domina autobot) 
