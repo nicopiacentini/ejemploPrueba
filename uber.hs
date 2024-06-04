@@ -75,8 +75,13 @@ realizarUnViaje viaje choferes
     where interesados = filter (\chofer -> tomaElViaje viaje chofer) choferes
 
 --7
-nifoCity :: Chofer
-nifoCity = UnChofer "Nifo City" 70000 viajesInfinitosLucas (nombrePasajeroLargo 3)
+nitoInfy :: Chofer
+nitoInfy = UnChofer "Nifo City" 70000 viajesInfinitosLucas (nombrePasajeroLargo 3)
+
+-- No se puede calcular su liquidacion porque la suma
+-- de los infitos costos diverge y no es ningun putno en especifico
+-- Ahora no puede tampoco tomar el viaje nuevo ya que el nombre "lucas"
+-- es una lista de chars de mas de 3 y no cumple con la condicion de nito infy
 
 viajesInfinitos :: Viaje -> [Viaje]
 viajesInfinitos viaje = viaje : (viajesInfinitos viaje)
@@ -86,3 +91,7 @@ viajesInfinitosLucas = viajesInfinitos otroViajeLucas
 
 otroViajeLucas :: Viaje
 otroViajeLucas = UnViaje 11032017 luquitas 50
+
+--8
+gongNeng :: (Ord a) => a -> (a -> Bool) -> (b -> a) -> [b] -> a
+gongNeng arg1 arg2 arg3 = max arg1 . head . filter arg2 . map arg3
