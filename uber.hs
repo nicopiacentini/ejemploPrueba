@@ -45,7 +45,13 @@ viajeDanielLucas = UnViaje 20042017 luquitas 150
 daniel :: Chofer
 daniel = UnChofer "Daniel" 23500 [viajeDanielLucas] (noViveEn "Olilvos")
 
+alejandra :: Chofer
+alejandra = UnChofer "alejandra" 180000 [] cualquierViaje
+
 --4
 tomaElViaje :: Viaje -> Chofer -> Bool
 tomaElViaje viaje  = ($ viaje) . condicionDeViaje
 
+--5
+liquidacionChofer :: Chofer -> Float
+liquidacionChofer = sum . map costo . viajesTomados
