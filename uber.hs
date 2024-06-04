@@ -10,14 +10,14 @@ data Chofer = UnChofer{
 type Condicion = Viaje -> Bool
 
 data Viaje = UnViaje{
-    fecha :: Int,
+    fecha :: Integer,
     cliente :: Cliente,
     costo :: Float
 }
 
 type Cliente = (String,String)
-direccion :: Cliente -> String
-direccion = snd
+zonaCliente :: Cliente -> String
+zonaCliente = snd
 
 nombreCliente :: Cliente -> String
 nombreCliente = fst
@@ -33,4 +33,14 @@ nombrePasajeroLargo :: Int -> Condicion
 nombrePasajeroLargo cantidad  = (> cantidad) . length . nombreCliente . cliente
 
 noViveEn :: String -> Condicion
-noViveEn zona = (/= zona) . direccion . cliente
+noViveEn zona = (/= zona) . zonaCliente . cliente
+
+--3
+luquitas :: Cliente
+luquitas = ("Lucas" , "Victoria")
+
+viajeDanielLucas :: Viaje
+viajeDanielLucas = UnViaje 20042017 luquitas 150
+
+daniel :: Chofer
+daniel = UnChofer "Daniel" 23500 [viajeDanielLucas] (noViveEn "Olilvos")
