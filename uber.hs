@@ -30,7 +30,7 @@ viajeCaro :: Condicion
 viajeCaro = (> 200) . costo
 
 nombrePasajeroLargo :: Int -> Condicion
-nombrePasajeroLargo cantidad  = (> cantidad) . length . nombreCliente . cliente
+nombrePasajeroLargo cantidad  = (>= cantidad) . length . nombreCliente . cliente
 
 noViveEn :: String -> Condicion
 noViveEn zona = (/= zona) . zonaCliente . cliente
@@ -55,3 +55,34 @@ tomaElViaje viaje  = ($ viaje) . condicionDeViaje
 --5
 liquidacionChofer :: Chofer -> Float
 liquidacionChofer = sum . map costo . viajesTomados
+
+
+--6
+tieneMenosViajes :: Chofer -> Chofer -> Chofer
+tieneMenosViajes chofer1 chofer2
+    | length (viajesTomados chofer1) > length (viajesTomados chofer2) = chofer1
+    | otherwise = chofer2
+elDeMenosViajes :: [Chofer] -> Chofer
+elDeMenosViajes choferes = foldr (tieneMenosViajes) (head choferes) choferes
+
+agregarViaje :: Viaje -> Chofer -> Chofer
+agregarViaje viaje chofer = chofer{viajesTomados = viaje : (viajesTomados chofer)}
+
+realizarUnViaje :: Viaje -> [Chofer] -> Chofer
+realizarUnViaje viaje choferes 
+    |(length interesados) == 0= agregarViaje viaje . elDeMenosViajes $ interesados
+    | otherwise = head choferes
+    where interesados = filter (\chofer -> tomaElViaje viaje chofer) choferes
+
+--7
+nifoCity :: Chofer
+nifoCity = UnChofer "Nifo City" 70000 viajesInfinitosLucas (nombrePasajeroLargo 3)
+
+viajesInfinitos :: Viaje -> [Viaje]
+viajesInfinitos viaje = viaje : (viajesInfinitos viaje)
+
+viajesInfinitosLucas :: [Viaje]
+viajesInfinitosLucas = viajesInfinitos otroViajeLucas
+
+otroViajeLucas :: Viaje
+otroViajeLucas = UnViaje 11032017 luquitas 50
