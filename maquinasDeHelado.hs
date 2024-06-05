@@ -14,8 +14,7 @@ esVocalUno letra
 --
 
 cantVocales :: String -> Float
-cantVocales [] = 0
-cantVocales (x:xs) = esVocalUno x + cantVocales xs
+cantVocales = sum . map esVocalUno
 
 proporcionIncorrecta :: Helado -> Bool
 proporcionIncorrecta (UnHelado "frutilla" _ proporcion) = proporcion /= 0.4
@@ -85,3 +84,5 @@ cintaUnificadora megamaquina maquina1 maquina2 = megamaquina maquina1 maquina2
 produccionSerie :: BidonAgua -> [CajonFruta] -> [Helado]
 produccionSerie agua = filter (not . salioMal) . map (batidora agua)
 
+
+--ejercicio 6
