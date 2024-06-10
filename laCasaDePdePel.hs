@@ -116,3 +116,12 @@ cantidadDeArmas = sum . map length . map armas
 pintaMalLaCosa :: [Ladron] -> [Rehen] -> Bool
 pintaMalLaCosa ladrones rehenes = (nivelPromedio . map nivelDeComplot $ rehenes) > (cantidadDeArmas ladrones + (nivelPromedio . map nivelDeMiedo) rehenes )
 
+
+
+--7
+aplicarPlan :: Ladron -> Rehen -> Ladron
+aplicarPlan ladron rehen = (planContraLadrones rehen) rehen ladron
+
+rebelarse :: [Rehen] -> Ladron -> Ladron
+rebelarse rehenes ladron = aplicarPlan ladron . head . map (cambiarNivelDeComplot (-10)) $ rehenes
+
