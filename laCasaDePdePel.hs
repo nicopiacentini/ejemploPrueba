@@ -90,5 +90,29 @@ esInteligente :: Ladron -> Bool
 esInteligente (UnLadron "profesor" _ _) = True
 esInteligente (UnLadron _ habilidades _) = length habilidades > 2
 
+--3
+conseguirUnArma :: Arma -> Ladron -> Ladron
+conseguirUnArma arma ladron = ladron{armas = arma : armas ladron}
 
+--4
+intimidar :: Intimidacion -> Ladron -> Rehen -> Rehen
+intimidar metodo ladron = metodo ladron 
+
+--5
+aplicarALosQueCumplen :: (a -> Bool) -> (a -> a) -> [a] -> [a]
+aplicarALosQueCumplen condicion funcion elementos = filter (not . condicion) elementos ++ (map funcion . filter (condicion) $ elementos)
+
+calmarLasAguas :: Intimidacion -> Ladron -> [Rehen] -> [Rehen]
+calmarLasAguas metodo ladron rehenes = aplicarALosQueCumplen (\rehen -> 60 > nivelDeMiedo rehen) (metodo ladron) rehenes
+
+
+--6
+nivelPromedio :: [Int] -> Int
+nivelPromedio numeros = div (sum numeros) (length numeros)
+
+cantidadDeArmas :: [Ladron] -> Int
+cantidadDeArmas = sum . map length . map armas
+
+pintaMalLaCosa :: [Ladron] -> [Rehen] -> Bool
+pintaMalLaCosa ladrones rehenes = (nivelPromedio . map nivelDeComplot $ rehenes) > (cantidadDeArmas ladrones + (nivelPromedio . map nivelDeMiedo) rehenes )
 
