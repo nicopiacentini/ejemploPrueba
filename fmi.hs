@@ -7,7 +7,7 @@ data Pais = UnPais{
     activaSectorPrivado :: Int,
     recursosNaturales :: [String],
     deudaActual :: Float -- en millones de dolares
-}
+} deriving Show
 
 namibia :: Pais
 namibia = UnPais "Namibia" 4140 400000 650000 ["mineria" , "ecoculturismo"] 50
@@ -42,4 +42,23 @@ establecerBlindaje :: Estrategia
 establecerBlindaje pais = prestarNMillones (pbi pais) . modificarSectorPublico (-500) $ pais
 
 
+--3
+type Receta = [Estrategia]
+
+unaReceta :: Receta
+unaReceta = [prestarNMillones 200 , entregarRecurso "mineria"]
+
+aplicarReceta :: Receta -> Pais -> Pais
+aplicarReceta receta pais = foldr ($) pais receta
+
+--4
+
+tieneRecurso :: String -> Pais -> Bool
+tieneRecurso recurso = any (== recurso) . recursosNaturales
+
+puedenZafar :: [Pais] -> [Pais]
+puedenZafar = filter (tieneRecurso "petroleo")
+
+deudaTotal :: [Pais] -> Float
+deudaTotal = sum . map (deudaActual)
 
