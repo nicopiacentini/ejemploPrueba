@@ -57,9 +57,9 @@ quitarArmas cantidad ladron = ladron{armas = drop cantidad (armas ladron)}
 puedeHacerElPlan :: Rehen -> Bool
 puedeHacerElPlan rehen =  nivelDeComplot rehen > nivelDeMiedo rehen 
 
-atacarAlLadron :: Plan
-atacarAlLadron rehen ladron
-    | puedeHacerElPlan rehen= quitarArmas (length . nombreRehen $ rehen) ladron
+atacarAlLadron :: Rehen -> Plan
+atacarAlLadron rehen otroRehen ladron
+    | puedeHacerElPlan otroRehen= quitarArmas (length . nombreRehen $ rehen) ladron
     | otherwise = ladron
 
 cantidadDeLetrasDeHabilidades :: Ladron -> Int
@@ -69,4 +69,20 @@ esconderse :: Plan
 esconderse rehen ladron
     | puedeHacerElPlan rehen = quitarArmas (div (cantidadDeLetrasDeHabilidades ladron) 3) ladron
     | otherwise = ladron
+
+--1
+
+tokio :: Ladron
+tokio = UnLadron "tokio" ["trabajo psicologico" , "entrar en moto"] [pistola 9 , pistola 9 , ametralladora 30]
+
+
+profesor :: Ladron
+profesor = UnLadron "profesor" ["disfrasarce de linyera" , "disfrazarse de payaso" , "siempre estar un paso adelante"] []
+
+pablo :: Rehen
+pablo = UnRehen "pablo" 40 30 esconderse
+
+arturito :: Rehen
+arturito = UnRehen "arturito" 70 50 (atacarAlLadron pablo)
+
 
