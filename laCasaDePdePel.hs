@@ -47,7 +47,7 @@ hacerseElMalo rio = cambiarNivelDeComplot 20
 hacerseElMalo _ = cambiarMiedo 10
 
 rio :: Ladron
-rio = UnLadron "rio" ["hola" , "si"] [ametralladora 3]
+rio = UnLadron "rio" ["hola"] [ametralladora 3]
 berlin :: Ladron
 berlin = UnLadron "berlin" ["hola" , "si"] [ametralladora 3]
 
@@ -84,5 +84,11 @@ pablo = UnRehen "pablo" 40 30 esconderse
 
 arturito :: Rehen
 arturito = UnRehen "arturito" 70 50 (atacarAlLadron pablo)
+
+--2
+esInteligente :: Ladron -> Bool
+esInteligente (UnLadron "profesor" _ _) = True
+esInteligente (UnLadron _ habilidades _) = length habilidades > 2
+
 
 
