@@ -71,4 +71,14 @@ estaOrdenada (unNumero : otroNumero : numeros) = unNumero > otroNumero && estaOr
 sonRecetasOrdenadasDeMenorAMayor :: [Receta] -> Pais -> Bool
 sonRecetasOrdenadasDeMenorAMayor recetas pais = estaOrdenada . map pbi . map (flip aplicarReceta pais) $ recetas
 
+--6
+recursosNaturalesInfinitos :: [String]
+recursosNaturalesInfinitos = "Energia" : recursosNaturalesInfinitos
 
+paisRandom :: Pais
+paisRandom = namibia{recursosNaturales = recursosNaturalesInfinitos}
+
+-- cuando se aplique la funcion puedezafar, el programa entra en un bucle infinito por la lazy evaluation.
+-- esto implica que el programa va a buscar hasta encontrar "petroleo" o hasta terminar la lista.
+-- como no ocurre nada de esto, entra en un bucle infinito
+-- la funcion de deuda total si es aplicable porque no mira los recursos naturales, solamente la deuda de cada pais con el fmi  
