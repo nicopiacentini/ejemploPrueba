@@ -62,3 +62,13 @@ puedenZafar = filter (tieneRecurso "petroleo")
 deudaTotal :: [Pais] -> Float
 deudaTotal = sum . map (deudaActual)
 
+--5
+estaOrdenada :: (Num a , Ord a) => [a] -> Bool
+estaOrdenada [] = True
+estaOrdenada [_] = True
+estaOrdenada (unNumero : otroNumero : numeros) = unNumero > otroNumero && estaOrdenada (otroNumero : numeros) 
+
+sonRecetasOrdenadasDeMenorAMayor :: [Receta] -> Pais -> Bool
+sonRecetasOrdenadasDeMenorAMayor recetas pais = estaOrdenada . map pbi . map (flip aplicarReceta pais) $ recetas
+
+
