@@ -125,3 +125,20 @@ aplicarPlan ladron rehen = (planContraLadrones rehen) rehen ladron
 rebelarse :: [Rehen] -> Ladron -> Ladron
 rebelarse rehenes ladron = aplicarPlan ladron . head . map (cambiarNivelDeComplot (-10)) $ rehenes
 
+--8
+puedeEscaparse :: Ladron -> Bool
+puedeEscaparse = any (== "disfrazarse de") . map (take (length "disfrazarse de")) . habilidades
+
+--9
+planValencia :: [Ladron] -> [Rehen] -> (Int , [Ladron])
+planValencia ladrones rehenes = (10000000 * cantidadDeArmas ladrones , filter puedeEscaparse . map (rebelarse rehenes) . map (conseguirUnArma (ametralladora 45)) $ ladrones)
+
+--10
+--si porque solo se agrega la ametralladora al principio y no afecta a si puede escaparse
+
+--11
+-- si siempre y cuando el de habilidades infinitas tenga alguna de disfrazarse de, porque sino se queda buscando infinitamente hasta encontrarlo
+
+--12
+funcion :: Foldable t1 => t2 -> (a1 -> t1 a2) -> (t2 -> a1 -> Bool) -> Int -> [a1] -> Bool
+funcion cond num lista str = (> str) . sum . map (length . num) . filter (lista cond)
