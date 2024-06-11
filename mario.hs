@@ -111,3 +111,35 @@ reparar reparacion plomero
     | esDificil reparacion = modificarDinero (presupuesto reparacion) . agregarReparacion reparacion . perderHerramientasBuenas $ plomero
     | otherwise = plomero{cajaHerramientas = drop 1 (cajaHerramientas plomero)}
 
+--7
+type JornadaDeTrabajo = [Reparacion]
+trabajarUnaJornada :: JornadaDeTrabajo -> Plomero -> Plomero
+trabajarUnaJornada jornada plomero = foldr (hacerReparacion) plomero jornada
+
+
+--8
+aquelDeMas :: (Ord a , Eq a) => (Plomero -> a) -> Plomero -> Plomero -> Plomero
+aquelDeMas condicion unplomero otroplomero
+    | (condicion unplomero) > (condicion otroplomero) = unplomero
+    | otherwise = otroplomero
+
+trabajo :: Plomero -> Plomero -> Plomero
+trabajo = aquelDeMas (length . historialReparaciones)
+
+plata :: Plomero -> Plomero -> Plomero
+plata = aquelDeMas dinero
+
+inversion :: Plomero -> Plomero -> Plomero
+inversion = aquelDeMas (sum . map precio . cajaHerramientas)
+
+elDeMas :: (Plomero -> Plomero -> Plomero) -> [Plomero] -> JornadaDeTrabajo -> Plomero
+elDeMas condicion plomeros jornada = foldr1 condicion . map (trabajarUnaJornada jornada) $ plomeros
+
+elDeMasTrabajo :: JornadaDeTrabajo ->  [Plomero] -> Plomero
+elDeMasTrabajo jornada plomeros = elDeMas trabajo plomeros jornada
+
+elDeMasDinero :: JornadaDeTrabajo -> [Plomero] -> Plomero
+elDeMasDinero jornada plomeros = elDeMas plata plomeros jornada
+
+elQueMasInvirtio :: JornadaDeTrabajo -> [Plomero] -> Plomero
+elQueMasInvirtio jornada plomeros = elDeMas inversion plomeros jornada
