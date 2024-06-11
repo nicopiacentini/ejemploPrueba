@@ -6,7 +6,7 @@ data Plomero = UnPlomero{
     historialReparaciones :: [Reparacion],
     dinero :: Float
 }
-type Reparacion = (Plomero -> Bool , String)
+
 
 data Herramienta = UnaHerramienta{
     nombreHerramienta :: String,
@@ -64,4 +64,25 @@ modificarDinero modificacion plomero = plomero{dinero = modificacion + dinero pl
 
 agregarHerramienta :: Herramienta -> Plomero -> Plomero
 agregarHerramienta herramienta plomero = plomero{cajaHerramientas = herramienta : cajaHerramientas plomero}
+
+
+type Reparacion = (Plomero -> Bool , String)
+descripcion :: Reparacion -> String
+descripcion = snd
+--5
+esGrito :: String -> Bool
+esGrito = all (esMayuscula)
+
+esMayuscula :: Char -> Bool
+esMayuscula letra = elem letra ['A' .. 'Z']
+
+esComplicada :: String -> Bool
+esComplicada palabra = esGrito palabra && ((> 100) . length) palabra
+
+esDificil :: Reparacion -> Bool
+esDificil = esComplicada . descripcion
+
+
+presupuesto :: Reparacion -> Int
+presupuesto = (* 3) . length . descripcion
 
