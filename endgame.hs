@@ -118,3 +118,14 @@ tieneHerramientaMachacada = ("machacado" ==) . take (length "machacado") . nombr
 
 esDebilAnte :: [Superheroe] -> Villano -> Bool
 esDebilAnte superheroes villano = (null (filter tieneHerramientaMachacada superheroes) &&) . and . map (\superheroe -> esElVillanoDe superheroe villano) $ superheroes
+
+--8
+drStrange :: Superheroe
+drStrange = UnSuperheroe "Stephen Strange" 60 "Tierra" ("Capa de levitacion" , 0) thanos
+
+clonesDedrStrange :: Int -> [Superheroe]
+clonesDedrStrange n = drStrange{nombreSuperheroe = "Stephen Strange " ++ show n} : clonesDedrStrange (n + 1)
+
+clonesInfinitosDrStrange :: [Superheroe]
+clonesInfinitosDrStrange = clonesDedrStrange 1
+
