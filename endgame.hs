@@ -66,3 +66,14 @@ romper artefacto = ("machacado " ++ " " ++ nombreArtefacto artefacto , 30 + dani
 
 romperSuArtefacto :: Superheroe -> Superheroe
 romperSuArtefacto superheroe = cambiarArtefactoPredilecto (romper (artefactoPredilecto superheroe)) superheroe
+
+
+sonAntagonistas :: Superheroe -> Villano -> Bool
+sonAntagonistas superheroe villano = esElVillanoDe superheroe villano || sonOriundosDelMismoPlaneta superheroe villano
+
+sonOriundosDelMismoPlaneta :: Superheroe -> Villano -> Bool
+sonOriundosDelMismoPlaneta superheroe villano = planetaOrigenSuperheroe superheroe == planetaOrigenVillano villano
+
+esElVillanoDe :: Superheroe -> Villano -> Bool
+esElVillanoDe superheroe villano = (nombreVillano villano ==) . nombreVillano . villanoEnemigo $ superheroe
+

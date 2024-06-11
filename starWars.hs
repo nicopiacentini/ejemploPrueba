@@ -1,6 +1,6 @@
 import Text.Show.Functions()
 --1
-data Nave = UnaNave{
+data Nave = UnaNave {
     nombreNave :: String,
     durabilidad :: Int,
     escudo :: Int,
