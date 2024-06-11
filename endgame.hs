@@ -77,3 +77,10 @@ sonOriundosDelMismoPlaneta superheroe villano = planetaOrigenSuperheroe superher
 esElVillanoDe :: Superheroe -> Villano -> Bool
 esElVillanoDe superheroe villano = (nombreVillano villano ==) . nombreVillano . villanoEnemigo $ superheroe
 
+--4
+atacadoPorVillanos :: [Villano] -> Superheroe -> Superheroe
+atacadoPorVillanos [] superheroe = superheroe
+atacadoPorVillanos (villano : villanos) superheroe
+    | esElVillanoDe superheroe villano = atacadoPorVillanos villanos superheroe
+    | otherwise = atacadoPorVillanos villanos ((arma villano) superheroe)
+
