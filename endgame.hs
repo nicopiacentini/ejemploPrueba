@@ -84,3 +84,13 @@ atacadoPorVillanos (villano : villanos) superheroe
     | esElVillanoDe superheroe villano = atacadoPorVillanos villanos superheroe
     | otherwise = atacadoPorVillanos villanos ((arma villano) superheroe)
 
+--5
+sobrevivientesDelVillano :: Villano -> [Superheroe] -> [Superheroe]
+sobrevivientesDelVillano villano = map (agregarAlNombre "Super") . filter sobrevive . map (arma villano)
+
+sobrevive :: Superheroe -> Bool
+sobrevive = (> 50) . vida
+
+agregarAlNombre :: String -> Superheroe -> Superheroe
+agregarAlNombre agregado superheroe = superheroe{nombreSuperheroe = agregado ++ nombreSuperheroe superheroe}
+
