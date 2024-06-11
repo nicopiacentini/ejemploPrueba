@@ -94,3 +94,21 @@ sobrevive = (> 50) . vida
 agregarAlNombre :: String -> Superheroe -> Superheroe
 agregarAlNombre agregado superheroe = superheroe{nombreSuperheroe = agregado ++ nombreSuperheroe superheroe}
 
+--6
+volverACasa :: [Superheroe] -> [Superheroe]
+volverACasa = map descansar . sobrevivientesDelVillano thanos
+
+descansar :: Superheroe -> Superheroe
+descansar = arreglarSuArtefacto . modificarVida 30
+
+arreglarSuArtefacto :: Superheroe -> Superheroe
+arreglarSuArtefacto superheroe = cambiarArtefactoPredilecto ((arreglarArtefacto . artefactoPredilecto) superheroe) superheroe
+
+arreglarArtefacto :: Artefacto -> Artefacto
+arreglarArtefacto artefacto = ((desmachacar . nombreArtefacto) artefacto , 0)
+
+desmachacar :: String -> String
+desmachacar nombre 
+    | "machacado" == take (length "machacado") nombre = drop (length "machacado") nombre
+    | otherwise = nombre
+
