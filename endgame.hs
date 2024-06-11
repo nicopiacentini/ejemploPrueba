@@ -38,5 +38,31 @@ thanos :: Villano
 thanos = UnVillano "Thanos" "Titan" guanteleteDelInfinito
 
 loki :: Villano
-loki = UnVillano "Loki Laufeyson" "Jotunheim" (centro 20)
+loki = UnVillano "Loki Laufeyson" "Jotunheim" (cetro 20)
 
+--2
+modificarVida :: Float -> Superheroe -> Superheroe
+modificarVida modificacion superheroe = superheroe{vida = max 0 (modificacion + vida superheroe)}
+
+guanteleteDelInfinito :: Arma
+guanteleteDelInfinito superheroe= modificarVida (-0.8 * (vida superheroe)) superheroe
+
+cetro :: Float -> Arma
+cetro efectividad superheroe = modificarVida (- (efectividad / 10) * vida superheroe) . aplicarSi (esTerricola) (romperSuArtefacto) $ superheroe 
+
+aplicarSi :: (a -> Bool) -> (a -> a) -> a -> a
+aplicarSi criterio funcion objeto
+    | criterio objeto = funcion objeto
+    | otherwise = objeto
+
+esTerricola :: Superheroe -> Bool
+esTerricola = (== "Tierra") . planetaOrigenSuperheroe
+
+cambiarArtefactoPredilecto :: Artefacto -> Superheroe -> Superheroe
+cambiarArtefactoPredilecto artefacto superheroe = superheroe{artefactoPredilecto = artefacto}
+
+romper :: Artefacto -> Artefacto 
+romper artefacto = ("machacado " ++ " " ++ nombreArtefacto artefacto , 30 + danioArtefacto artefacto)   
+
+romperSuArtefacto :: Superheroe -> Superheroe
+romperSuArtefacto superheroe = cambiarArtefactoPredilecto (romper (artefactoPredilecto superheroe)) superheroe
