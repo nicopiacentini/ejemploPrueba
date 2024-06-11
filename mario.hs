@@ -33,3 +33,16 @@ llavesFrancesasInfinitas n = (UnaHerramienta "llave francesa" n Hierro) : llaves
 
 cajaDeWario :: [Herramienta]
 cajaDeWario = llavesFrancesasInfinitas 1
+
+
+--2
+
+tieneHerramienta :: Herramienta -> Plomero -> Bool
+tieneHerramienta herramienta = any (== nombreHerramienta herramienta) . map nombreHerramienta . cajaHerramientas
+
+esMalvado :: Plomero -> Bool
+esMalvado = (== "Wa") . take 2 . nombrePlomero
+
+puedeComprar :: Herramienta -> Plomero -> Bool
+puedeComprar herramienta plomero = (<= dinero plomero) . precio $ herramienta
+
