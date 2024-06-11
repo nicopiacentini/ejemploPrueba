@@ -112,3 +112,9 @@ desmachacar nombre
     | "machacado" == take (length "machacado") nombre = drop (length "machacado") nombre
     | otherwise = nombre
 
+--7
+tieneHerramientaMachacada :: Superheroe -> Bool
+tieneHerramientaMachacada = ("machacado" ==) . take (length "machacado") . nombreArtefacto . artefactoPredilecto
+
+esDebilAnte :: [Superheroe] -> Villano -> Bool
+esDebilAnte superheroes villano = (null (filter tieneHerramientaMachacada superheroes) &&) . and . map (\superheroe -> esElVillanoDe superheroe villano) $ superheroes
