@@ -14,7 +14,7 @@ data Herramienta = UnaHerramienta{
     materialEmpuniadura :: Material
 }
 
-data Material = Hierro | Madera | Goma | Plastico
+data Material = Hierro | Madera | Goma | Plastico deriving Eq
 
 mario :: Plomero
 mario = UnPlomero "Mario" [llaveInglesaHierro , martilloMadera] [] 1200
@@ -45,4 +45,23 @@ esMalvado = (== "Wa") . take 2 . nombrePlomero
 
 puedeComprar :: Herramienta -> Plomero -> Bool
 puedeComprar herramienta plomero = (<= dinero plomero) . precio $ herramienta
+
+--3
+esBuena :: Herramienta -> Bool
+esBuena (UnaHerramienta "martillo" _ Madera) = True
+esBuena (UnaHerramienta "martillo" _ Goma) = True
+esBuena (UnaHerramienta _ presio Hierro) = presio > 10000
+esBuena _ = False
+
+--4
+comprarHerramienta :: Herramienta -> Plomero -> Plomero
+comprarHerramienta herramienta plomero
+    | puedeComprar herramienta plomero = modificarDinero (- precio herramienta) . agregarHerramienta herramienta $ plomero
+    | otherwise = plomero
+
+modificarDinero :: Float -> Plomero -> Plomero
+modificarDinero modificacion plomero = plomero{dinero = modificacion + dinero plomero}
+
+agregarHerramienta :: Herramienta -> Plomero -> Plomero
+agregarHerramienta herramienta plomero = plomero{cajaHerramientas = herramienta : cajaHerramientas plomero}
 
