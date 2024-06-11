@@ -1,4 +1,5 @@
 --1
+import Data.List(genericLength)
 
 data Plomero = UnPlomero{
     nombrePlomero :: String,
@@ -83,6 +84,30 @@ esDificil :: Reparacion -> Bool
 esDificil = esComplicada . descripcion
 
 
-presupuesto :: Reparacion -> Int
-presupuesto = (* 3) . length . descripcion
+presupuesto :: (Num a) => Reparacion -> a
+presupuesto = (* 3) . genericLength . descripcion
+
+--6
+requerimiento :: Reparacion -> (Plomero -> Bool)
+requerimiento = fst
+
+puedeReparar :: Reparacion -> Plomero -> Bool
+puedeReparar reparacion plomero = ((requerimiento reparacion) plomero) || esMalvado plomero && tieneHerramienta (UnaHerramienta "martillo" 0 Hierro) plomero
+
+hacerReparacion :: Reparacion -> Plomero -> Plomero
+hacerReparacion reparacion plomero
+    | puedeReparar reparacion plomero = reparar reparacion plomero
+    | otherwise = modificarDinero 100 plomero
+
+agregarReparacion :: Reparacion -> Plomero -> Plomero
+agregarReparacion reparacion plomero = plomero{historialReparaciones = reparacion : historialReparaciones plomero}
+
+perderHerramientasBuenas :: Plomero -> Plomero
+perderHerramientasBuenas plomero = plomero{cajaHerramientas = filter (esBuena) (cajaHerramientas plomero)}
+
+reparar :: Reparacion -> Plomero -> Plomero
+reparar reparacion plomero
+    | esMalvado plomero = modificarDinero (presupuesto reparacion) . agregarReparacion reparacion . agregarHerramienta (UnaHerramienta "destornillador" 0 Plastico) $ plomero
+    | esDificil reparacion = modificarDinero (presupuesto reparacion) . agregarReparacion reparacion . perderHerramientasBuenas $ plomero
+    | otherwise = plomero{cajaHerramientas = drop 1 (cajaHerramientas plomero)}
 
